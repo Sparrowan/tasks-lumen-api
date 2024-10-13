@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,9 +10,10 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:tasks,title',
             'description' => 'nullable|string',
-            'completed' => 'boolean',
+            'status' => 'in:pending,completed',
+            'due_date' => 'required|date|after:today',
         ]);
 
         $task = Task::create($request->all());
@@ -47,9 +47,10 @@ class TaskController extends Controller
         }
 
         $this->validate($request, [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:tasks,title,' . $task->id,
             'description' => 'nullable|string',
-            'completed' => 'boolean',
+            'status' => 'in:pending,completed',
+            'due_date' => 'required|date|after:today',
         ]);
 
         $task->update($request->all());
