@@ -77,4 +77,13 @@ The following endpoints are available in the Task Management API:
 
 
 
+## Postman Collection
+
+A Postman collection named `Task-api-lumen.postman_collection.json` is available for easy testing of the Task Management API. This collection includes all the API endpoints along with sample requests and responses, making it simple to interact with the API and explore its functionalities.
+
+To use the collection, follow these steps:
+
+1. Download the `Task-api-lumen.postman_collection.json` file.
+2. Open Postman and import the collection by selecting **File > Import** and choosing the downloaded JSON file.
+3. Once imported, you can test each endpoint, modify requests, and observe responses directly within Postman.
 
