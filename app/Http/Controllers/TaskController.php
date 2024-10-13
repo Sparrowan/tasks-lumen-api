@@ -21,9 +21,25 @@ class TaskController extends Controller
         return response()->json($task, 201);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
+        $query = Task::query();
+
+        if ($request->has('status') && $request->input('status') !== '') {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->has('due_date') && $request->input('due_date') !== '') {
+            $query->whereDate('due_date', $request->input('due_date'));
+        }
+
+        if ($request->has('search') && $request->input('search') !== '') {
+            $query->where('title', 'like', '%' . $request->input('search') . '%');
+        }
+
+        $perPage = $request->input('per_page', 10);
+        $tasks = $query->paginate($perPage);
+
         return response()->json($tasks);
     }
 
