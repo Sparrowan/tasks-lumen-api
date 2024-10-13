@@ -4,17 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $rules = [
             'title' => 'required|string|max:255|unique:tasks,title',
             'description' => 'nullable|string',
-            'status' => 'in:pending,completed',
+            'status' => 'required|in:pending,completed',
             'due_date' => 'required|date|after:today',
-        ]);
+        ];
+
+        $this->validate($request, $rules);
 
         $task = Task::create($request->all());
 
@@ -62,12 +65,14 @@ class TaskController extends Controller
             return response()->json(['message' => 'Task not found'], 404);
         }
 
-        $this->validate($request, [
+        $rules = [
             'title' => 'required|string|max:255|unique:tasks,title,' . $task->id,
             'description' => 'nullable|string',
-            'status' => 'in:pending,completed',
+            'status' => 'required|in:pending,completed',
             'due_date' => 'required|date|after:today',
-        ]);
+        ];
+
+        $this->validate($request, $rules);
 
         $task->update($request->all());
 
@@ -85,5 +90,13 @@ class TaskController extends Controller
         $task->delete();
 
         return response()->json(['message' => 'Task deleted']);
+    }
+
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        return response()->json([
+            'errors' => $exception->errors(),
+            'message' => 'Validation failed',
+        ], $exception->status);
     }
 }
