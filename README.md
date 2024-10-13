@@ -25,10 +25,10 @@ The **Task Management API** is a RESTful API built with **Lumen** that allows us
 3. **Configure the environment variables: Copy the .env.example file to .env and configure your database connection settings.**
 4. **Run migrations:**
     ```bash
-        php artisan migrate
+    php artisan migrate
 5. **Start the server:**
     ```bash
-        php -S localhost:8000 -t public
+    php -S localhost:8000 -t public
 
 ## API Endpoints
 
