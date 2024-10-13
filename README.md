@@ -1,26 +1,80 @@
-# Lumen PHP Framework
+# Task Management API
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+## Overview
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+The **Task Management API** is a RESTful API built with **Lumen** that allows users to manage tasks effectively. The API supports basic CRUD operations and provides features for filtering, searching, and pagination of tasks. It is designed to help users keep track of their tasks, including details such as title, description, status, and due dates.
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+## Technologies Used
 
-## Official Documentation
+- **Lumen**: A PHP micro-framework by Laravel that is fast and lightweight, suitable for building APIs.
+- **PostgreSQL**: A powerful, open-source object-relational database system that uses and extends the SQL language.
+- **PHP**: The server-side scripting language used to develop the application.
+- **Composer**: Dependency manager for PHP used to install Lumen and other required packages.
+- **Postman**: Tool used for testing API endpoints during development.
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+## Installation
 
-## Contributing
+1. **Clone the repository:**
+   ```bash
+   git clonegit@github.com:Sparrowan/tasks-lumen-api.git
+   cd tasks-lumen-api
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Install dependencies:**
+    ```bash
+    composer install
+3. **Configure the environment variables: Copy the .env.example file to .env and configure your database connection settings.**
+4. **Run migrations:**
+    ```bash
+        php artisan migrate
+5. **Start the server:**
+    ```bash
+        php -S localhost:8000 -t public
 
-## Security Vulnerabilities
+## API Endpoints
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+The following endpoints are available in the Task Management API:
 
-## License
+### 1. Create a Task
+- **Endpoint:** `POST /api/tasks`
+- **Description:** Create a new task.
+- **Request Body:**
+  ```json
+  {
+      "title": "Task Title",
+      "description": "Task description",
+      "status": "pending",
+      "due_date": "2024-10-20"
+  }
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 2. Get All Tasks
+- **Endpoint:** `GET /api/tasks`
+- **Description:** Retrieve a list of all tasks with optional filters.
+- **Query Parameters:**
+  - `status`: Filter tasks by status (pending, completed).
+  - `due_date`: Filter tasks by due date.
+  - `search`: Search tasks by title.
+  - `per_page`: Number of tasks per page (default is 10).
+
+### 3. Get a Single Task
+- **Endpoint:** `GET /api/tasks/{id}`
+- **Description:** Retrieve a specific task by ID.
+
+### 4. Update a Task
+- **Endpoint:** `PUT /api/tasks/{id}`
+- **Description:** Update an existing task by ID.
+- **Request Body:**
+  ```json
+  {
+      "title": "Updated Task Title",
+      "description": "Updated description",
+      "status": "completed",
+      "due_date": "2024-11-01"
+  }
+
+### 5. Delete a Task
+- **Endpoint:** `DELETE /api/tasks/{id}`
+- **Description:** Delete a specific task by ID.
+
+
+
+
